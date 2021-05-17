@@ -1,33 +1,33 @@
-var express = require('express'),
-    helpers = require('./helpers'),
-    pdc = require('pdc');
+import express from 'express';
+import { getBody } from './helpers.js';
+import pdc from 'pdc';
 
-this.server = express();
-this.server.set('views', './views');
-this.server.set('view engine', 'ejs');
-this.server.use(express.static('public'));
+const server = express();
+server.set('views', './views');
+server.set('view engine', 'ejs');
+//server.use('public');
 
-this.server.get('/', function(req, res) {
+server.get('/', function(req, res) {
   res.render('index');
 });
 
-this.server.post('/:format', function(req, res) {
+server.post('/:format', function(req, res) {
   var contentType = req.get('Content-Type');
-  
+
   if (contentType) {
     var from = contentType.split("/")[1];
     var to = req.params.format;
-  
-    helpers.getBody(req, function(body) {
+
+    getBody(req, function(body) {
       pdc(body, from, to, function(err, result) {
         if (err) res.sendStatus(400)
           else res.append('Content-Type', 'text/' + to).send(result);
       });
-    });  
-  } else res.sendStatus(400) 
+    });
+  } else res.sendStatus(400)
 });
 
-exports.listen = function(port) {
-  this.server.listen(port);
+export function listen(port) {
+  server.listen(port);
   console.log("Express server listening on port %d", port);
-};
+}

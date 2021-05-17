@@ -1,4 +1,4 @@
-exports.getBody = function(req, callback) {
+export function getBody(req, callback) {
   var buf = '';
 
   req.setEncoding('utf8');
@@ -10,4 +10,4 @@ exports.getBody = function(req, callback) {
   req.on('end', function() {
     callback(buf.trim());
   });
-};
+}

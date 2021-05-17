@@ -1,3 +1,3 @@
-var server = require('./server');
+import { listen } from './server.js';
 
-server.listen(process.argv[2] || 8080);
+listen(process.argv[2] || 8080);
